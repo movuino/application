@@ -1,0 +1,19 @@
+{
+  "name": "ZigWig",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Motion sensing for everybody.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/topela/ZigWig",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "movuino.js": "github:topela/movuino.js"
+  },
+  "devDependencies": {
+    "electron": "^1.7.5",
+    "electron-rebuild": "^1.5.11"
+  }
+}
