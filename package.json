@@ -19,6 +19,7 @@
     "movuino.js": "github:topela/movuino.js",
     "preact": "^8.2.1",
     "randomcolor": "^0.5.3",
+    "smoothie": "^1.29.1",
     "sudo-prompt": "^7.1.1",
     "wifi-password": "^3.0.1"
   },
