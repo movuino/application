@@ -11,32 +11,6 @@ const url = require("url");
 
 process.title = "ZigWig";
 
-// Const m = require('movuino.js')
-// m.on('movuino', async movuino => {
-//   console.log('movuino')
-//
-//   movuino.on('data', (data) => {
-//     console.log(data)
-//   })
-//
-//   movuino.on('plugged', async () => {
-//     console.log('plugged')
-//     try {
-//       await movuino.attachSerial()
-//       await movuino.setWifi({
-//         ssid: 'Livebox-E7AC',
-//         password: 'motdepassedelaliveboxintrouvable',
-//         host: '192.168.1.25',
-//       })
-//     } catch(e) {
-//       console.error(e)
-//     }
-//     console.log('wifi setup')
-//
-//
-//   })
-// })
-
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
