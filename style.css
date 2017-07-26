@@ -12,6 +12,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
 }
 
 .logo {
@@ -19,6 +22,7 @@ html, body {
   left: 10px;
   top: 10px;
   cursor: pointer;
+  color: white;
 }
 
 .circle {
@@ -50,7 +54,7 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   opacity: 0;
 }
 
