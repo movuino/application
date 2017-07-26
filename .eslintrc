@@ -1,0 +1,24 @@
+env:
+  node: true
+  browser: true
+
+plugins:
+  - node
+  - unicorn
+
+extends:
+  - eslint:recommended
+  - plugin:unicorn/recommended
+  - plugin:node/recommended
+  - xo/esnext
+  - xo/browser
+
+rules:
+  indent: [error, 2]
+  quotes: [error, double]
+  no-console: 0
+  # unicorn https://github.com/sindresorhus/eslint-plugin-unicorn
+  unicorn/filename-case: 0
+  # node https://github.com/mysticatea/eslint-plugin-node
+  node/no-unpublished-require: [error, {allowModules: [electron]}]
+  node/no-unsupported-features: [error, {version: 8}]

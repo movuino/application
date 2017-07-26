@@ -3,17 +3,49 @@
   <head>
     <meta charset="UTF-8">
     <title>ZigWig</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    <div class="main">
+      <h1 class="logo">ZigWig</h1>
+      <div class="circle">
+      </div>
+       <form class="configuration">
+        <fieldset disabled>
+          <div class="form-group">
+            <label for="ssid">WiFi name</label>
+            <input type="text" required class="form-control" name="ssid">
+          </div>
+          <div class="form-group">
+            <label for="password">WiFi password</label>
+            <input type="password" class="form-control" name="password">
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input class="form-check-input" name="show" type="checkbox">
+              Show
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="host">Computer IP</label>
+            <input type="text" required class="form-control" name="host">
+          </div>
+          <div style="text-align: center">
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </fieldset>
+      </form> 
+      <div class="buttons">
+      </div>
+    </div>
   </body>
 
   <script>
-    // You can also require other files to run in this process
     require('./renderer.js')
+
+    console.log(`Node.js version ${process.versions.node}`)
+    console.log(`Chromium version ${process.versions.chrome}`)
+    console.log(`Electron version ${process.versions.electron}`)
   </script>
 </html>

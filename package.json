@@ -5,15 +5,29 @@
   "description": "Motion sensing for everybody.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "test": "eslint .",
+    "rebuild": "electron-rebuild"
   },
   "repository": "https://github.com/topela/ZigWig",
   "license": "GPL-3.0",
   "dependencies": {
-    "movuino.js": "github:topela/movuino.js"
+    "bootstrap": "4.0.0-alpha.6",
+    "debounce": "^1.0.2",
+    "faker": "^4.1.0",
+    "hyperscript": "^2.0.2",
+    "movuino.js": "github:topela/movuino.js",
+    "preact": "^8.2.1",
+    "randomcolor": "^0.5.3",
+    "sudo-prompt": "^7.1.1",
+    "wifi-password": "^3.0.1"
   },
   "devDependencies": {
     "electron": "^1.7.5",
-    "electron-rebuild": "^1.5.11"
+    "electron-rebuild": "^1.5.11",
+    "eslint": "^4.3.0",
+    "eslint-config-xo": "^0.18.2",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-unicorn": "^2.1.2"
   }
 }
