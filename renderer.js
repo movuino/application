@@ -19,24 +19,6 @@ window.onerror = function (err) {
 const movuinos = [];
 
 m.on("movuino", async movuino => {
-  movuino.once("data", () => {
-    let n = 0
-
-    const listener = () => {
-      n++
-    }
-
-    movuino.on("data", listener)
-
-    setInterval(() => {
-      // movuino.removeListener("data", listener)
-      console.log(`${n} messages per second`);
-      console.log(`${1000 / n}ms latency`);
-      n = 0
-    }, 1000)
-  })
-
-
   movuino.behaviors = {
     online: [],
     offline: [],
@@ -112,13 +94,13 @@ m.on("movuino", async movuino => {
 
   if (movuino.name === 'Axel') {
     movuino.on("data", (data) => {
-      if (data[2] < -0.6 || data[2] > 0.6) {
+      if (data[0] < 1 || data[0] > 1) {
         clap();
       }
     });
   } else if (movuino.name === 'Eva') {
     movuino.on("data", (data) => {
-      if (data[2] < -0.6 || data[2] > 0.6) {
+      if (data[0] < -0.6 || data[0] > 0.6) {
         clap2();
       }
     });
@@ -129,9 +111,14 @@ m.detectWifi().then(({ssid, host}) => {
   const savedSsid = localStorage.getItem("ssid");
   const savedPassword = localStorage.getItem("password");
   const savedHost = localStorage.getItem("host");
+  const savedHide = localStorage.getItem("hide") === "true";
 
   const form = document.querySelector(".configuration");
+
+  form.elements.password.type = savedHide ? "password" : "text";
+
   form.elements.ssid.value = ssid || savedSsid || "";
+  form.elements.hide.checked = savedHide;
 
   function end() {
     form.querySelector("fieldset").disabled = false;
@@ -163,10 +150,12 @@ m.detectWifi().then(({ssid, host}) => {
     const ssid = form.elements.ssid.value;
     const password = form.elements.password.value;
     const host = form.elements.host.value;
+    const hide = form.elements.hide.checked;
 
     localStorage.setItem("ssid", ssid);
     localStorage.setItem("password", password);
     localStorage.setItem("host", host);
+    localStorage.setItem("hide", hide);
 
     m.movuinos.forEach(async movuino => {
       if (!movuino.plugged) {
@@ -185,9 +174,9 @@ m.detectWifi().then(({ssid, host}) => {
     });
   });
 
-  form.elements.show.addEventListener("change", () => {
-    const checked = form.elements.show.checked;
-    form.elements.password.type = checked ? "text" : "password";
+  form.elements.hide.addEventListener("change", () => {
+    const checked = form.elements.hide.checked;
+    form.elements.password.type = checked ? "password" : "text";
   });
 }).catch(err => {
   console.error(err);
@@ -289,10 +278,18 @@ function drawMovuino(movuino) {
         h("div.status", {},
           h("img.plugged", {src: "./images/usb.png", hidden: true}),
           h("img.online", {src: "./images/wifi.png", hidden: true}),
+          h("span.rate")
         ),
       )
     )
   );
+
+  let rate = 0;
+  movuino.on("data", () => rate++);
+  setInterval(() => {
+    el.querySelector(".rate").textContent = `${rate}m/s`;
+    rate = 0;
+  }, 1000);
 
   function close(evt) {
     evt.stopPropagation();
