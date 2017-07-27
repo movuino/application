@@ -8,7 +8,7 @@
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-  <div id="graphwrapper">
+  <div id="graphwrapper" hidden>
     <span class="label">Accelerometer</span>
     <canvas class="graph accelerometer"></canvas>
     <div class="axis">
@@ -28,8 +28,8 @@
     <div class="axis">
       <span>I dont understand how this shit works</span>
     </div>
+    <div id="disclaimer">Axis references works when you hold the ZigWig with the USB port facing you and the white face up.</div>    
   </div>
-  <div id="disclaimer">Axis references works when you hold the ZigWig with the USB port facing you and the white face up.</div>
   <div class="main">
     <h1 class="logo">ZigWig</h1>
     <div class="circle">
@@ -60,6 +60,9 @@
       </fieldset>
     </form>
     <div class="buttons">
+      <button class="audio">
+        <img src="./images/mute.png"/>
+      </button>
     </div>
   </div>
 </body>
@@ -67,7 +70,6 @@
 <script type="text/javascript" src="./node_modules/smoothie/smoothie.js"></script>
 <script>
 require('./renderer.js')
-require('./graph.js')
 
 console.log(`Node.js version ${process.versions.node}`)
 console.log(`Chromium version ${process.versions.chrome}`)

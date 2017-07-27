@@ -10,6 +10,7 @@ const debounce = require("debounce");
 
 const sounds = require("./lib/sounds");
 const motions = require("./lib/motions");
+const graph = require("./graph");
 
 window.onerror = function (err) {
   sounds.fart();
@@ -92,19 +93,19 @@ m.on("movuino", async movuino => {
     sounds.clap2();
   }, 100, true);
 
-  if (movuino.name === 'Axel') {
-    movuino.on("data", (data) => {
-      if (data[0] < 1 || data[0] > 1) {
-        clap();
-      }
-    });
-  } else if (movuino.name === 'Eva') {
-    movuino.on("data", (data) => {
-      if (data[0] < -0.6 || data[0] > 0.6) {
-        clap2();
-      }
-    });
-  }
+  // if (movuino.name === "Axel") {
+  //   movuino.on("data", (data) => {
+  //     if (data[2] > 0.1 || data[2] < -0.1) {
+  //       clap2();
+  //     }
+  //   });
+  // } else if (movuino.name === "Eva") {
+  //   movuino.on("data", (data) => {
+  //     if (data[0] < 1 || data[0] > 1) {
+  //       clap2();
+  //     }
+  //   });
+  // }
 });
 
 m.detectWifi().then(({ssid, host}) => {
@@ -295,6 +296,7 @@ function drawMovuino(movuino) {
     evt.stopPropagation();
     sounds.pop();
     el.classList.remove("big");
+    graph.stop(movuino);
   }
 
   function open() {
@@ -307,8 +309,21 @@ function drawMovuino(movuino) {
     el.style.zIndex = "99";
     sounds.inflate();
     el.classList.add("big");
+    graph.start(movuino);
   }
 
   movuino.el = el;
   document.querySelector(".circle").appendChild(el);
 }
+
+// // buttons
+// (() => {
+//   const audio = document.querySelector(".audio");
+//   const muted = !!localStorage.getItem("muted");
+//   if (muted) {
+//     audio.querySelector("img")
+//   }
+//   audio.addEventListener("click", () => {
+
+//   })
+// })();
