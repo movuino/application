@@ -1,6 +1,6 @@
 "use strict";
 
-const {TimeSeries, SmoothieChart} = window;
+const { TimeSeries, SmoothieChart } = window;
 
 const accelerometer = createGraph("accelerometer");
 const gyroscope = createGraph("gyroscope");
@@ -43,9 +43,18 @@ function createGraph(sensor) {
   const yline = new TimeSeries();
   const zline = new TimeSeries();
 
-  smoothie.addTimeSeries(xline, {lineWidth: 2.2, strokeStyle: "rgba(255,0,0,1)"});
-  smoothie.addTimeSeries(yline, {lineWidth: 2.2, strokeStyle: "rgba(0,255,0,1)"});
-  smoothie.addTimeSeries(zline, {lineWidth: 2.2, strokeStyle: "rgba(0,0,255,1)"});
+  smoothie.addTimeSeries(xline, {
+    lineWidth: 2.2,
+    strokeStyle: "rgba(255,0,0,1)"
+  });
+  smoothie.addTimeSeries(yline, {
+    lineWidth: 2.2,
+    strokeStyle: "rgba(0,255,0,1)"
+  });
+  smoothie.addTimeSeries(zline, {
+    lineWidth: 2.2,
+    strokeStyle: "rgba(0,0,255,1)"
+  });
 
   return smoothie;
 }

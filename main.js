@@ -22,11 +22,13 @@ function createWindow() {
   });
 
   // And load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, "index.html"),
-    protocol: "file:",
-    slashes: true
-  }));
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "index.html"),
+      protocol: "file:",
+      slashes: true
+    })
+  );
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.maximize();

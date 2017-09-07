@@ -86,6 +86,14 @@ html, body {
   display: block !important;
 }
 
+.movuino.big .add-button {
+  display: block !important;
+  width: 64px;
+  cursor: pointer;
+  top: 10px;
+  position: absolute;
+}
+
 .movuino.big .close-button {
   display: block !important;
   width: 64px;

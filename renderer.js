@@ -6,26 +6,21 @@ const faker = require("faker");
 const wifiPassword = require("wifi-password");
 const m = require("movuino.js");
 const os = require("os");
-const debounce = require("debounce");
 
 const sounds = require("./lib/sounds");
-const motions = require("./lib/motions");
 const graph = require("./graph");
 
-window.onerror = function (err) {
+window.onerror = function(err) {
   sounds.fart();
   console.error(err);
 };
 
+require("./behaviors");
+
 const movuinos = [];
 
 m.on("movuino", async movuino => {
-  movuino.behaviors = {
-    online: [],
-    offline: [],
-    plugged: [],
-    unplugged: []
-  };
+  movuino.behaviors = [];
 
   movuino.color = randomColor({
     luminosity: "light",
@@ -83,105 +78,105 @@ m.on("movuino", async movuino => {
     }
   });
 
+  movuino.on("vibrator-on", () => {
+    console.log("vibrator on", movuino.name);
+  });
+
+  movuino.on("vibrator-off", () => {
+    console.log("vibrator off", movuino.name);
+  });
+
+  movuino.on("button-up", () => {
+    console.log("button-up", movuino.name);
+  });
+
+  movuino.on("button-down", () => {
+    console.log("button-down", movuino.name);
+  });
+
   movuinos.push(movuino);
-
-  const clap = debounce(() => {
-    sounds.clap();
-  }, 100, true);
-
-  const clap2 = debounce(() => {
-    sounds.clap2();
-  }, 100, true);
-
-  // if (movuino.name === "Axel") {
-  //   movuino.on("data", (data) => {
-  //     if (data[2] > 0.1 || data[2] < -0.1) {
-  //       clap2();
-  //     }
-  //   });
-  // } else if (movuino.name === "Eva") {
-  //   movuino.on("data", (data) => {
-  //     if (data[0] < 1 || data[0] > 1) {
-  //       clap2();
-  //     }
-  //   });
-  // }
 });
 
-m.detectWifi().then(({ssid, host}) => {
-  const savedSsid = localStorage.getItem("ssid");
-  const savedPassword = localStorage.getItem("password");
-  const savedHost = localStorage.getItem("host");
-  const savedHide = localStorage.getItem("hide") === "true";
+m
+  .detectWifi()
+  .then(({ ssid, host }) => {
+    console.log(ssid, host);
+    const savedSsid = localStorage.getItem("ssid");
+    const savedPassword = localStorage.getItem("password");
+    const savedHost = localStorage.getItem("host");
+    const savedHide = localStorage.getItem("hide") === "true";
 
-  const form = document.querySelector(".configuration");
+    const form = document.querySelector(".configuration");
 
-  form.elements.password.type = savedHide ? "password" : "text";
+    form.elements.password.type = savedHide ? "password" : "text";
 
-  form.elements.ssid.value = ssid || savedSsid || "";
-  form.elements.hide.checked = savedHide;
-
-  function end() {
-    form.querySelector("fieldset").disabled = false;
-  }
-
-  if (!savedSsid) {
+    form.elements.ssid.value = ssid || savedSsid || "";
+    form.elements.hide.checked = savedHide;
     form.elements.host.value = host;
-    end();
-  } else if (!ssid || ssid === savedSsid) {
-    form.elements.password.value = savedPassword;
-    form.elements.host.value = savedHost;
-    end();
-  } else if (["darwin", "win32"].includes(os.platform())) {
-    // Linux requires sudo
-    wifiPassword(ssid).then(password => {
-      form.elements.password.value = password;
+
+    function end() {
+      form.querySelector("fieldset").disabled = false;
+    }
+
+    if (!savedSsid) {
+      form.elements.host.value = host;
       end();
-    }).catch(err => {
-      console.error(err);
+    } else if (!ssid || ssid === savedSsid) {
+      form.elements.password.value = savedPassword;
+      form.elements.host.value = savedHost;
       end();
-    });
-  } else {
-    end();
-  }
-
-  form.addEventListener("submit", evt => {
-    evt.preventDefault();
-
-    const ssid = form.elements.ssid.value;
-    const password = form.elements.password.value;
-    const host = form.elements.host.value;
-    const hide = form.elements.hide.checked;
-
-    localStorage.setItem("ssid", ssid);
-    localStorage.setItem("password", password);
-    localStorage.setItem("host", host);
-    localStorage.setItem("hide", hide);
-
-    m.movuinos.forEach(async movuino => {
-      if (!movuino.plugged) {
-        return;
-      }
-      try {
-        await movuino.attachSerial();
-        await movuino.setWifi({
-          ssid,
-          password,
-          host
+    } else if (["darwin", "win32"].includes(os.platform())) {
+      // Linux requires sudo
+      wifiPassword(ssid)
+        .then(password => {
+          form.elements.password.value = password;
+          end();
+        })
+        .catch(err => {
+          console.error(err);
+          end();
         });
-      } catch (err) {
-        console.error(err);
-      }
-    });
-  });
+    } else {
+      end();
+    }
 
-  form.elements.hide.addEventListener("change", () => {
-    const checked = form.elements.hide.checked;
-    form.elements.password.type = checked ? "password" : "text";
+    form.addEventListener("submit", evt => {
+      evt.preventDefault();
+
+      const ssid = form.elements.ssid.value;
+      const password = form.elements.password.value;
+      const host = form.elements.host.value;
+      const hide = form.elements.hide.checked;
+
+      localStorage.setItem("ssid", ssid);
+      localStorage.setItem("password", password);
+      localStorage.setItem("host", host);
+      localStorage.setItem("hide", hide);
+
+      m.movuinos.forEach(async movuino => {
+        if (!movuino.plugged) {
+          return;
+        }
+        try {
+          await movuino.setWifi({
+            ssid,
+            password,
+            host
+          });
+        } catch (err) {
+          console.error(err);
+        }
+      });
+    });
+
+    form.elements.hide.addEventListener("change", () => {
+      const checked = form.elements.hide.checked;
+      form.elements.password.type = checked ? "password" : "text";
+    });
+  })
+  .catch(err => {
+    console.error(err);
   });
-}).catch(err => {
-  console.error(err);
-});
 
 const circle = document.querySelector(".circle");
 const diameter = circle.clientHeight;
@@ -271,16 +266,34 @@ function drawMovuino(movuino) {
   //   "audio"
   // ];
 
-  const el = (
-    h("div.movuino", {onclick: open, style},
-      h("img.close-button", {onclick: close, src: "./images/close.png", hidden: true}),
-      h("div.status", {},
-        h("h1.title", movuino.name),
-        h("div.status", {},
-          h("img.plugged", {src: "./images/usb.png", hidden: true}),
-          h("img.online", {src: "./images/wifi.png", hidden: true}),
-          h("span.rate")
-        ),
+  const el = h(
+    "div.movuino",
+    { onclick: open, style },
+    h("img.add-button", {
+      onclick: add,
+      src: "./images/add.png",
+      hidden: true
+    }),
+    h("img.close-button", {
+      onclick: close,
+      src: "./images/close.png",
+      hidden: true
+    }),
+    h(
+      "div.status",
+      {},
+      h("h1.title", movuino.name),
+      h(
+        "div.status",
+        {},
+        h("img.plugged", { src: "./images/usb.png", hidden: true }),
+        h("img.online", { src: "./images/wifi.png", hidden: true }),
+        h("span.rate")
+      ),
+      h(
+        "div.behaviors",
+        {}
+        // h("h2", "Behaviors")
       )
     )
   );
@@ -292,17 +305,34 @@ function drawMovuino(movuino) {
     rate = 0;
   }, 1000);
 
+  function add() {
+    $("#behaviorModal").modal();
+  }
+
   function close(evt) {
     evt.stopPropagation();
     sounds.pop();
     el.classList.remove("big");
     graph.stop(movuino);
+
+    movuino.startVibro();
+    setTimeout(() => {
+      movuino.stopVibro();
+    }, 100);
   }
 
   function open() {
+    window.movuino = movuino;
+
     if (el.classList.contains("big")) {
       return;
     }
+
+    movuino.startVibro();
+    setTimeout(() => {
+      movuino.stopVibro();
+    }, 100);
+
     movuinos.forEach(movuino => {
       movuino.el.style.zIndex = "0";
     });
@@ -327,3 +357,5 @@ function drawMovuino(movuino) {
 
 //   })
 // })();
+
+require("./lib/demo");
