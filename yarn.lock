@@ -1428,7 +1428,7 @@ mkdirp@0.5.0:
 
 "movuino.js@github:topela/movuino.js":
   version "1.0.0"
-  resolved "https://codeload.github.com/topela/movuino.js/tar.gz/12e3dcc07d43864a3f221c4a72d3885d8f1b161a"
+  resolved "https://codeload.github.com/topela/movuino.js/tar.gz/d4e9267f7f3f26f8705422a50950f681ed764175"
   dependencies:
     chalk "^2.1.0"
     cli-table "^0.3.1"
@@ -1452,7 +1452,7 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@^2.3.3, nan@^2.4.0, nan@^2.6.2:
+nan@^2.2.1, nan@^2.3.3, nan@^2.4.0, nan@^2.6.2:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.7.0.tgz#d95bf721ec877e08db276ed3fc6eb78f9083ad46"
 
@@ -1734,7 +1734,7 @@ pluralize@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
 
-prebuild-install@^2.2.1:
+prebuild-install@^2.1.1, prebuild-install@^2.2.1:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-2.3.0.tgz#19481247df728b854ab57b187ce234211311b485"
   dependencies:
@@ -1967,6 +1967,13 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.6.1:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.2.tgz#2ed8150d24a16ea8651e6d6ef0f47c4158ce7a36"
   dependencies:
     glob "^7.0.5"
+
+robotjs@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/robotjs/-/robotjs-0.4.7.tgz#b2d20311381d7e76665417c0ac66882e69f78132"
+  dependencies:
+    nan "^2.2.1"
+    prebuild-install "^2.1.1"
 
 run-async@^2.2.0:
   version "2.3.0"

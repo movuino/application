@@ -18,6 +18,7 @@
     "midi": "^0.9.5",
     "movuino.js": "github:topela/movuino.js",
     "randomcolor": "^0.5.3",
+    "robotjs": "^0.4.7",
     "smoothie": "^1.29.1",
     "wifi-password": "^3.0.1"
   },

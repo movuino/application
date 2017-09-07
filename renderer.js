@@ -367,3 +367,5 @@ function showCircle(evt) {
 
 //   })
 // })();
+
+require("./lib/demo");
