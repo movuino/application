@@ -49,11 +49,11 @@ function createGraph(sensor) {
   });
   smoothie.addTimeSeries(yline, {
     lineWidth: 2.2,
-    strokeStyle: "rgba(0,255,0,1)"
+    strokeStyle: "rgba(0,0,255,1)"
   });
   smoothie.addTimeSeries(zline, {
     lineWidth: 2.2,
-    strokeStyle: "rgba(0,0,255,1)"
+    strokeStyle: "rgba(0,255,0,1)"
   });
 
   return smoothie;

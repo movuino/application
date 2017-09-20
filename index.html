@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>ZigWig</title>
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
   <div id="graphwrapper" hidden>
     <span class="label">Accelerometer</span>
@@ -28,7 +30,7 @@
     <div class="axis">
       <span>I dont understand how this shit works</span>
     </div>
-    <div id="disclaimer">Axis references works when you hold the ZigWig with the USB port facing you and the white face up.</div>    
+    <div id="disclaimer">Axis references works when you hold the ZigWig with the USB port facing you and the white face up.</div>
   </div>
   <div class="main">
     <h1 class="logo">ZigWig</h1>
@@ -59,6 +61,7 @@
         </div>
       </fieldset>
     </form>
+    <img class="axes" src="./images/3d.svg" />
     <div class="buttons">
       <button class="audio">
         <img src="./images/mute.png"/>
@@ -120,15 +123,19 @@
 </body>
 
 <script type="text/javascript" src="./node_modules/smoothie/smoothie.js"></script>
-<script>window.$ = window.jQuery = require('jquery');</script>
+<script>
+  window.$ = window.jQuery = require('jquery');
+
+</script>
 <script type="text/javascript" src="./node_modules/bootstrap/js/dist/util.js"></script>
 <script type="text/javascript" src="./node_modules/bootstrap/js/dist/modal.js"></script>
 <script>
-require('./renderer.js')
+  require('./renderer.js')
 
-console.log(`Node.js version ${process.versions.node}`)
-console.log(`Chromium version ${process.versions.chrome}`)
-console.log(`Electron version ${process.versions.electron}`)
+  console.log(`Node.js version ${process.versions.node}`)
+  console.log(`Chromium version ${process.versions.chrome}`)
+  console.log(`Electron version ${process.versions.electron}`)
+
 </script>
 
 </html>
