@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>ZigWig</title>
@@ -7,28 +8,29 @@
   <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
   <div id="graphwrapper" hidden>
     <span class="label">Accelerometer</span>
     <canvas class="graph accelerometer"></canvas>
     <div class="axis">
       <span class="x">X is red and goes sideways - </span>
-      <span class="y">Y is green and goes forward or backward - </span>
-      <span class="z">Z is blue and goes up and down</span>
+      <span class="y">Y is blue and goes forward or backward - </span>
+      <span class="z">Z is green and goes up and down</span>
     </div>
     <span class="label">Gyroscope</span>
     <canvas class="graph gyroscope"></canvas>
     <div class="axis">
       <span class="x">X is red and show pitch - </span>
-      <span class="y">Y is green and show roll - </span>
-      <span class="z">Z is red and show yaw</span>
+      <span class="y">Y is blue and show roll - </span>
+      <span class="z">Z is green and show yaw</span>
     </div>
     <span class="label">Magnetometer</span>
     <canvas class="graph magnetometer"></canvas>
     <div class="axis">
       <span>I dont understand how this shit works</span>
     </div>
-    <div id="disclaimer">Axis references works when you hold the ZigWig with the USB port facing you and the white face up.</div>    
+    <div id="disclaimer">Axis references works when you hold the ZigWig with the USB port facing you and the white face up.</div>
   </div>
   <div class="main">
     <h1 class="logo">ZigWig</h1>
@@ -59,21 +61,81 @@
         </div>
       </fieldset>
     </form>
+    <img class="axes" src="./images/3d.svg" />
     <div class="buttons">
       <button class="audio">
         <img src="./images/mute.png"/>
       </button>
     </div>
   </div>
+  <!-- behavior modal -->
+  <div class="modal fade" id="behaviorModal" tabindex="-1" role="dialog" aria-labelledby="behaviorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="behaviorModalLabel">Behavior</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="input" class="form-control-label">Input:</label>
+              <select multiple name="input" class="form-control">
+                <option></option>
+                <option>x</option>
+                <option>x+</option>
+                <option>x-</option>
+                <option>y</option>
+                <option>y+</option>
+                <option>y-</option>
+                <option>z</option>
+                <option>z+</option>
+                <option>z-</option>
+              </select>
+              <!-- <input type="text" class="form-control" name="input"> -->
+            </div>
+            <div class="form-group">
+              <label for="output" class="form-control-label">Output:</label>
+              <select name="output" class="form-control">
+                <option></option>
+                <option>play</option>
+                <option>pause</option>
+                <option>volume up</option>
+                <option>volume down</option>
+                <!-- <option></option>
+                <option>y-</option>
+                <option>z</option>
+                <option>z+</option>
+                <option>z-</option> -->
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary add">Add</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 
 <script type="text/javascript" src="./node_modules/smoothie/smoothie.js"></script>
 <script>
-require('./renderer.js')
+  window.$ = window.jQuery = require('jquery');
 
-console.log(`Node.js version ${process.versions.node}`)
-console.log(`Chromium version ${process.versions.chrome}`)
-console.log(`Electron version ${process.versions.electron}`)
+</script>
+<script type="text/javascript" src="./node_modules/bootstrap/js/dist/util.js"></script>
+<script type="text/javascript" src="./node_modules/bootstrap/js/dist/modal.js"></script>
+<script>
+  require('./renderer.js')
+
+  console.log(`Node.js version ${process.versions.node}`)
+  console.log(`Chromium version ${process.versions.chrome}`)
+  console.log(`Electron version ${process.versions.electron}`)
+  
 </script>
 
 </html>
