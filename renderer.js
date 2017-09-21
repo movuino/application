@@ -33,11 +33,6 @@ m.on("movuino", async movuino => {
   drawMovuino(movuino);
 
   movuino.on("plugged", async () => {
-    const range = await movuino.getRange();
-    movuino.range = range;
-    movuino.el.querySelector(".range").textContent =
-      "Ranges : " + range.accel + " / " + range.gyro;
-
     sounds.on();
     movuino.plugged = true;
     movuino.el.querySelector(".plugged").hidden = false;
@@ -59,6 +54,8 @@ m.on("movuino", async movuino => {
 
   movuino.on("online", async () => {
     sounds.youpi();
+    movuino.el.querySelector(".range").textContent =
+      "Ranges : " + movuino.accel + " / " + movuino.gyro;
     movuino.online = true;
     movuino.el.querySelector(".online").hidden = false;
     console.log("online", movuino.name);
@@ -294,6 +291,13 @@ function drawMovuino(movuino) {
   }, 1000);
 
   function close(evt) {
+    delete window.movuino;
+
+    document.querySelector(".axes").hidden = true;
+
+    el.removeEventListener("mouseleave", hideCircle);
+    el.removeEventListener("mouseover", showCircle);
+
     evt.stopPropagation();
     sounds.pop();
     el.classList.remove("big");
@@ -306,14 +310,16 @@ function drawMovuino(movuino) {
   }
 
   function open() {
-    el.addEventListener("mouseleave", hideCircle);
-    el.addEventListener("mouseover", showCircle);
-
-    window.movuino = movuino;
-
     if (el.classList.contains("big")) {
       return;
     }
+
+    document.querySelector(".axes").hidden = false;
+
+    window.movuino = movuino;
+
+    el.addEventListener("mouseleave", hideCircle);
+    el.addEventListener("mouseover", showCircle);
 
     movuino.startVibro();
     setTimeout(() => {
