@@ -39,6 +39,11 @@ m.on("movuino", async movuino => {
   drawMovuino(movuino);
 
   movuino.on("plugged", async () => {
+
+   const range = await movuino.getRange();
+    movuino.range = range;
+    movuino.el.querySelector(".range").textContent = "Ranges : "+range.accel+" / "+range.gyro;
+
     sounds.on();
     movuino.plugged = true;
     movuino.el.querySelector(".plugged").hidden = false;
@@ -266,6 +271,8 @@ function drawMovuino(movuino) {
   //   "audio"
   // ];
 
+
+
   const el = h(
     "div.movuino",
     { onclick: open, style },
@@ -283,6 +290,7 @@ function drawMovuino(movuino) {
       "div.status",
       {},
       h("h1.title", movuino.name),
+      h("span.range"),
       h(
         "div.status",
         {},
@@ -310,6 +318,10 @@ function drawMovuino(movuino) {
   }
 
   function close(evt) {
+
+    el.removeEventListener("mouseleave", hideCircle);
+    el.removeEventListener("mouseover", showCircle);
+
     evt.stopPropagation();
     sounds.pop();
     el.classList.remove("big");
@@ -323,6 +335,9 @@ function drawMovuino(movuino) {
 
   function open() {
     window.movuino = movuino;
+
+    el.addEventListener("mouseleave", hideCircle);
+    el.addEventListener("mouseover", showCircle);
 
     if (el.classList.contains("big")) {
       return;
@@ -346,6 +361,16 @@ function drawMovuino(movuino) {
   document.querySelector(".circle").appendChild(el);
 }
 
+function hideCircle(evt){
+  document.querySelector(".circle").style.opacity = .2
+  evt.target.style.opacity = .2
+}
+
+function showCircle(evt){
+  document.querySelector(".circle").style.opacity = 1
+  evt.target.style.opacity = 1
+}
+
 // // buttons
 // (() => {
 //   const audio = document.querySelector(".audio");
@@ -358,4 +383,4 @@ function drawMovuino(movuino) {
 //   })
 // })();
 
-require("./lib/demo");
+// require("./lib/demo");
