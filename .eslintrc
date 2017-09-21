@@ -5,6 +5,7 @@ env:
 plugins:
   - node
   - unicorn
+  - prettier
 
 extends:
   - eslint:recommended
@@ -12,6 +13,7 @@ extends:
   - plugin:node/recommended
   - xo/esnext
   - xo/browser
+  - prettier
 
 rules:
   indent: [error, 2]
