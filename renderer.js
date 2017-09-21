@@ -44,6 +44,11 @@ m.on("movuino", async movuino => {
   drawMovuino(movuino);
 
   movuino.on("plugged", async () => {
+
+    const range = await movuino.getRange();
+    movuino.range = range;
+    movuino.el.querySelector(".range").textContent = "Ranges : "+range.accel+" / "+range.gyro;
+
     sounds.on();
     movuino.plugged = true;
     movuino.el.querySelector(".plugged").hidden = false;
@@ -276,6 +281,7 @@ function drawMovuino(movuino) {
       h("img.close-button", {onclick: close, src: "./images/close.png", hidden: true}),
       h("div.status", {},
         h("h1.title", movuino.name),
+        h("span.range"),
         h("div.status", {},
           h("img.plugged", {src: "./images/usb.png", hidden: true}),
           h("img.online", {src: "./images/wifi.png", hidden: true}),
@@ -300,6 +306,11 @@ function drawMovuino(movuino) {
   }
 
   function open() {
+
+
+    el.addEventListener("mouseleave", hideCircle);
+    el.addEventListener("mouseover", showCircle);
+
     if (el.classList.contains("big")) {
       return;
     }
@@ -314,6 +325,16 @@ function drawMovuino(movuino) {
 
   movuino.el = el;
   document.querySelector(".circle").appendChild(el);
+}
+
+function hideCircle(evt){
+  document.querySelector(".circle").style.opacity = .2
+  evt.target.style.opacity = .2
+}
+
+function showCircle(evt){
+  document.querySelector(".circle").style.opacity = 1
+  evt.target.style.opacity = 1
 }
 
 // // buttons
