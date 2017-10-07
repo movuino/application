@@ -15,6 +15,8 @@ window.onerror = function(err) {
   throw err;
 };
 
+m.listen();
+
 m.on("movuino", async movuino => {
   movuino.color = randomColor({
     luminosity: "light",

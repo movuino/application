@@ -13,25 +13,25 @@
   "license": "GPL-3.0",
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
-    "debounce": "^1.0.2",
     "faker": "^4.1.0",
     "hyperscript": "^2.0.2",
     "midi": "^0.9.5",
     "movuino.js": "github:topela/movuino.js",
     "randomcolor": "^0.5.3",
     "smoothie": "^1.29.1",
-    "sudo-prompt": "^7.1.1",
     "wifi-password": "^3.0.1"
   },
   "devDependencies": {
-    "electron": "^1.7.5",
+    "devtron": "^1.4.0",
+    "electron": "1.8.1",
+    "electron-debug": "^1.4.0",
     "electron-rebuild": "^1.5.11",
-    "eslint": "^4.3.0",
-    "eslint-config-prettier": "^2.4.0",
+    "eslint": "^4.8.0",
+    "eslint-config-prettier": "^2.6.0",
     "eslint-config-xo": "^0.18.2",
-    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-node": "^5.2.0",
     "eslint-plugin-prettier": "^2.2.0",
     "eslint-plugin-unicorn": "^2.1.2",
-    "prettier": "^1.6.1"
+    "prettier": "^1.7.4"
   }
 }
