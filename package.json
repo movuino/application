@@ -1,5 +1,5 @@
 {
-  "name": "ZigWig",
+  "name": "movuino",
   "private": true,
   "version": "0.1.0",
   "description": "Motion sensing for everybody.",
@@ -9,7 +9,7 @@
     "test": "eslint .",
     "rebuild": "electron-rebuild"
   },
-  "repository": "https://github.com/topela/ZigWig",
+  "repository": "github:topela/application",
   "license": "GPL-3.0",
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",

@@ -4,20 +4,23 @@ const h = require("hyperscript");
 const randomColor = require("randomcolor");
 const faker = require("faker");
 const wifiPassword = require("wifi-password");
-const m = require("movuino.js");
+const movuinojs = require("movuino.js");
 const os = require("os");
 
 const sounds = require("./lib/sounds");
 const graph = require("./graph");
 
-window.onerror = function(err) {
+function onError(err) {
   sounds.fart();
   throw err;
-};
+}
 
-m.listen();
+movuinojs.listen();
 
-m.on("movuino", async movuino => {
+movuinojs.on("error", onError);
+window.onerror = onError;
+
+movuinojs.on("movuino", async movuino => {
   movuino.color = randomColor({
     luminosity: "light",
     format: "rgba",
@@ -33,6 +36,8 @@ m.on("movuino", async movuino => {
   console.log("movuino", movuino.name);
 
   drawMovuino(movuino);
+
+  movuino.on("error", onError);
 
   movuino.on("plugged", async () => {
     sounds.on();
@@ -93,7 +98,7 @@ m.on("movuino", async movuino => {
   });
 });
 
-m
+movuinojs
   .detectWifi()
   .then(({ ssid, host }) => {
     console.log(ssid, host);
@@ -149,7 +154,7 @@ m
       localStorage.setItem("host", host);
       localStorage.setItem("hide", hide);
 
-      m.movuinos.forEach(async movuino => {
+      movuinojs.movuinos.forEach(async movuino => {
         if (!movuino.plugged) {
           return;
         }
@@ -328,7 +333,7 @@ function drawMovuino(movuino) {
       movuino.stopVibro();
     }, 100);
 
-    m.movuinos.forEach(movuino => {
+    movuinojs.movuinos.forEach(movuino => {
       movuino.el.style.zIndex = "0";
     });
     el.style.zIndex = "99";

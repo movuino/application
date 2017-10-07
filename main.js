@@ -5,7 +5,7 @@ const path = require("path");
 const url = require("url");
 
 // prevents app ready event to be fired on OS X
-// process.title = "ZigWig";
+// process.title = "Movuino";
 
 require("electron-debug")({ showDevTools: true });
 
